@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<base th:href="@{/}">
+<title>Add Book</title>
+</head>
+<body>
+		<form method="post" action="books/Create">
+			<table class="forma">
+			
+				<caption>Add Book</caption>
+				
+				<tr><th>ISBN</th><td><input type="text" name="ISBN"/></td></tr>
+				<tr><th>Name</th><td><input type="text" name="name"/></td></tr>
+				<tr><th>Publishing House</th><td><input type="text" name="publishingHouse"/></td></tr>
+				<tr><th>Author</th><td><input type="text" name="author"/></td></tr>
+				<tr><th>Year Of Publication</th><td><input type="text" name="yearOfPublication"/></td></tr>
+				<tr><th>Description</th><td><input type="text" name="description"/></td></tr>
+				
+				<tr><th>Image</th><td><input type="file" name="image" accept="images/*" onchange="loadFile(event)"/></td></tr>
+		
+				<tr><th>Price</th><td><input type="number" value="0" name="price" /></td></tr>
+				<tr><th>Number Of Pages</th><td><input type="number" value="0" name="numberOfPages"/></td></tr>
+				<tr>
+					<th>Type Of Cover</th>
+					<td>
+						<select name="typeOfCover">
+							<option name="typeOfCover" value="Hardcover">Hardcover</option>
+							<option name="typeOfCover" value="Softcover">Softcover</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>Letter</th>
+					<td>
+						<select name="letter">
+							<option value="Latin">Latin</option>
+							<option value="Cyrillic">Cyrillic</option>
+						</select>
+					</td>
+				</tr>
+				
+				<tr><th></th><td><input type="submit" value="Add - Submit"/></td></tr>
+			</table>
+			
+		</form>
+	
+		
+		<ul>
+			<li><a href="books">Povratak</a></li>
+		</ul>
+</body>
+</html>

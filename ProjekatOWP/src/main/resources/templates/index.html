@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+   	<base th:href="@{/}"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dobrodosli</title>
+
+</head>
+
+<body>
+<header>
+                        <div>
+                            <ul>
+                                <li><a href="login.html" >Login</a><br>
+                                <li><a href="register.html">Register</a></li>						
+<!--                                  <li th:if="${session.loggedInUser != null and session.loggedInUser.administrator}"> -->
+                       
+<!-- 									<a href="books/Create">Add Book</a><br> -->
+						
+<!-- 								</li> -->
+								<li>
+                          			<a href="Users/Logout">Log Out</a><br>
+                      			</li>
+                      			<li><a href="books">Prikaz svih knjiga</a>
+                      			</li>
+
+                      			<li>
+                                <p class="greska" th:text="${poruka}"></p>
+                                </li>
+                                </ul>
+                            
+                        </div>
+    </header>
+</body>
+</html>

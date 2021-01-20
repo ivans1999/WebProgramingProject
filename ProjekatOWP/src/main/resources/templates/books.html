@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>  
+    <base th:href="@{/}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Sve Knjige</title>
+   
+</head>
+<body>
+	<header>
+                        <div>
+                            <ul>
+         						<li><a href="register.html" >Register</a></li>
+                                 <li th:if="${session.loggedInUser == null or not session.loggedInUser.administrator}">
+                       
+									<a href="books/Create">Add book</a>
+						
+								</li>
+								<li>
+                          			<a href="Users/Logout">Log Out</a>
+                      			</li>
+                                </ul>
+                            
+                        </div>
+    </header>
+
+<form method="get" id="form2">
+	                  <div class="title">
+	                    <h3>Prikaz svih knjiga</h3>
+	                     
+
+	                    
+	                    <div id="inputs1" class="inputs" style="display: inline-flex">
+	                    <input id="findBook" type="search"  name="author" th:value="${param.author}?: null"  placeholder="Pretraga Autora"><br>
+	                    <input id="findBook2" type="search"  name="name" th:value="${param.name}?: null"  placeholder="Pretraga po imenu knjige"><br>
+	                    <input id="findBook3" type="number" step="0.1" min="0" onkeyup="if(this.value<0){this.value= this.value * -1}" name="price" th:value="${param.price}?: null"  placeholder="Pretraga po ceni ?"><br>
+	                   
+	                
+	                 	</div>
+	                 	
+	                    <input type="submit" value="Find Book"/>
+	          
+				</div>
+				</form>		
+	   
+	 <form method="get" id="form2">
+	 
+	    <div class="row">
+	
+	    
+	        <div id="bookID">
+	        
+	       
+	        	<div th:each="itBook, status: ${books}">
+	          		<div>
+	          			
+		            <figure><a href="|books/Details?id=${itBook.id}|"></a></figure>
+		                
+		          	</div>
+		          	
+		          	<h3><a th:href="|books/Details?id=${itBook.id}|" th:text="${itBook.name}"></a></h3>
+		          	
+		          	<div><h4 th:text="${itBook.author}"></h4></div>
+       	       	
+		         	
+		         	<div th:text="${itBook.description}"></div>
+		         	
+		         	<div th:text="${itBook.price}"></div>
+		         	
+		        </div>
+		        
+		          </div>
+		      </div>   
+		    
+				</form>
+</body>
+</html>

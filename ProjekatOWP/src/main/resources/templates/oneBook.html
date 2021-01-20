@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <base th:href="@{/}"> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Prikaz knjige</title>
+</head>
+<body>
+    	<header>
+
+                        <div>
+                            <ul>
+                               	<li><a href="register.html" >Register</a></li>
+                                <li>
+                                <p class="greska" th:text="${poruka}"></p>
+                                </li>
+								<li>
+                          			<a href="Users/Logout">Log Out</a>
+                      			</li>
+                      			<li th:if="${session.loggedInUser == null or not session.loggedInUser.administrator}">
+                       
+									<a href="books/Create">Add Book</a>
+						
+								</li>
+                                </ul>
+                            
+                        </div>
+    </header>
+	<div>
+ 
+                  <div class="title">
+                  
+                    <h3>Knjiga</h3>
+                    
+                     <h2 th:text="${book.name}"></h2>
+        
+                     
+     	</div>
+   		 </div>
+    	
+    	
+   
+		                 
+		                <form id="formaEdit" method="post" action="books/Edit" th:if="${session.loggedInUser == null or not session.loggedInUser.administrator}">
+		                
+		                	<input type="hidden" name="id" th:value="${book.id}">
+		                     
+		                     
+		                     <br><h4>Name:</h4><input type="text" th:value="${book.name}" name="name"/>
+		                     
+		                     <br><h4>Author:</h4><input type="text" th:value="${book.author}" name="author"/></h4>
+		                  
+		                     <br><span>Genre Komedija</span> <br>
+		                     
+		                     <br><span>Number Of Pages:</span> <input type="number" th:value="${book.numberOfPages}" name="numberOfPages"/>
+		                     
+		                     <br><span>Publishing House:</span> <input type="text" th:value="${book.publishingHouse}" name="publishingHouse"/>
+		                     
+		                     <br><span>Year Of Publication:</span> <input type="text" th:value="${book.yearOfPublication}" name="yearOfPublication"/>
+		                     
+		                     <br><span>Type Of Cover:</span> <input type="text" th:value="${book.typeOfCover}" name="typeOfCover"/> 
+		                     
+		                     <br><span>Letter:</span> <input type="text" th:value="${book.letter}" name="letter"/> 
+		                     
+		                     <br><span>Price: <input type="number" value="0" th:value="${book.price}" name="price"/>$</span>
+		                              
+		           		     <br><br>
+		           		     
+		           		     <div class="orderbook">
+		           		     <span>Koliko knjiga zelite poruciti?</span> <input type="number" value="0" min="0"  onkeyup="if(this.value<0){this.value= this.value * -1}" name="numberOfBooks"/> 
+		                     </div>
+		                     
+		                     <br>
+		                     <div class="editBook2">
+		                     
+		                      <input class="editBook" type="submit" value="Edit Book">
+		                     
+		                     </div>
+		                     <br>
+		 					
+		 					<div>
+		 					
+			                    <h3>Opis:</h3>
+			                    <textarea class="descriptionInput" type="text" th:field="*{book.description}" name="description">
+			 					</textarea>
+		 					
+		 					</div>
+		 					
+		 					</form>
+		 					
+
+<p>------------------------------------------------------------------------------------------------------------------------</p>		           
+		           <div class="forma" th:if="${session.loggedInUser == null or not session.loggedInUser.administrator}">
+		           
+		             <div class="col-xl-88 col-lg-91 col-md-12 col-sm-12">
+		                 <div class="book_box">
+		                 	
+		                 	<input type="hidden" name="id" th:value="${book.id}">
+		                 	
+		                     
+		                     <h3 th:text="${book.name}"></h3><br>
+		                     
+		                     <h4 th:text="${book.author}"></h4>
+		                     
+		                     <br><span>Genre - Drama</span> <br>
+		                     
+		                     <br><span>Number Of Pages:</span> <span th:text="${book.numberOfPages}"></span>
+		                     
+		                     <br><span>Publishing House:</span> <span th:text="${book.publishingHouse}"></span>
+		                     
+		                     <br><span>Year Of Publication:</span> <span th:text="${book.yearOfPublication}"></span>
+		                     
+		                     <br><span>Type Of Cover:</span> <span th:text="${book.typeOfCover}"></span> 
+		                     
+		                     <br><span>Letter:</span> <span th:text="${book.letter}"></span> 
+		                     
+		                     <h3>Price: <span class="cena" th:text="${book.price}"></span>$</h3>
+		                     <br>
+		                    </div>
+		                    
+		             </div>
+		
+		             <div class="col-xl-88 col-lg-91 col-md-12 col-sm-12">
+		                <div class="book_box">
+		                    <h3>Opis:</h3>
+		                    <h4 th:text="${book.description}"></h4> 
+		                    <p></p>
+		
+		
+		                   </div>
+		            </div>
+</body>
+
+
+</html>
