@@ -110,10 +110,6 @@ public class BookDAOImpl implements BookDAO{
 			String description = rs.getString(index++);
 			
 			byte[] image = rs.getBytes(1);
-//			Blob image = rs.getBlob(index++);
-//			InputStream binaryStream = image.getBinaryStream(0, image.length());
-//			
-//			byte[] imageBytes = image.getBytes(1, (int) image.length());
 			
 			Double price = rs.getDouble(index++);
 			Integer numberOfPages = rs.getInt(index++);

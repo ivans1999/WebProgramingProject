@@ -21,9 +21,6 @@ public class Book {
 	private String typeOfCover;
 	private String letter;
 	private Integer numberOfBooks;
-	
-	
-	//private List<Genre> genres = new ArrayList<>();
 
 
 	public Book() {}
@@ -169,17 +166,6 @@ public class Book {
 	public void setLetter(String letter) {
 		this.letter = letter;
 	}
-
-//	public List<Genre> getGenres() {
-//		return genres;
-//	}
-//
-//	public void setGenres(List<Genre> genres) {
-//		this.genres.clear();
-//		this.genres.addAll(genres);
-//	}
-//	
-	
 	
 
 

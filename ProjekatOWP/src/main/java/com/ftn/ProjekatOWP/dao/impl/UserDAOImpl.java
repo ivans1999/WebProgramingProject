@@ -30,7 +30,6 @@ public class UserDAOImpl implements UserDAO {
 		@Override
 		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 			
-//			Calendar tzCal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 			
 			int index = 1;
 			String username = rs.getString(index++);
@@ -41,7 +40,6 @@ public class UserDAOImpl implements UserDAO {
 			String phoneNumber = rs.getString(index++);
 			String gender = rs.getString(index++);
 			LocalDateTime dateOfBirth = rs.getTimestamp(index++).toLocalDateTime();
-//			Date registrationDate = rs.getDate("registrationDate", tzCal);
 			Date registrationDate = rs.getTimestamp(index++);
 			Boolean administrator = rs.getBoolean(index++);
 
@@ -90,114 +88,6 @@ public class UserDAOImpl implements UserDAO {
 		return null;
 	}
 	
-	
-//	@Override
-//	public List<User> find(String username,String name,String lastname,String email,String address,String phoneNumber,
-//							String gender, LocalDateTime dateOfBirth, Date registrationDate, Boolean administrator) {
-//		
-//		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
-//		
-//		String sql = "SELECT username, name, lastname, email, address, phoneNumber, gender, dateOfBirth, registrationDate, administrator FROM users ";
-//		
-//		StringBuffer whereSql = new StringBuffer(" WHERE ");
-//		boolean imaArgumenata = false;
-//		
-//		if(username!=null) {
-//			username = "%" + username + "%";
-//			if(imaArgumenata)
-//				whereSql.append(" AND ");
-//			whereSql.append("username LIKE ?");
-//			imaArgumenata = true;
-//			listaArgumenata.add(username);
-//		}
-//		
-//		if(name!=null) {
-//			name = "%" + name + "%";
-//			if(imaArgumenata)
-//				whereSql.append(" AND ");
-//			whereSql.append("name LIKE ?");
-//			imaArgumenata = true;
-//			listaArgumenata.add(name);
-//		}
-//		
-//		if(lastname!=null) {
-//			lastname = "%" + lastname + "%";
-//			if(imaArgumenata)
-//				whereSql.append(" AND ");
-//			whereSql.append("lastname LIKE ?");
-//			imaArgumenata = true;
-//			listaArgumenata.add(lastname);
-//		}
-//		
-//		if(email!=null) {
-//			email = "%" + email + "%";
-//			if(imaArgumenata)
-//				whereSql.append(" AND ");
-//			whereSql.append("email LIKE ?");
-//			imaArgumenata = true;
-//			listaArgumenata.add(email);
-//		}
-//		
-//		if(address!=null) {
-//			address = "%" + address + "%";
-//			if(imaArgumenata)
-//				whereSql.append(" AND ");
-//			whereSql.append("address LIKE ?");
-//			imaArgumenata = true;
-//			listaArgumenata.add(address);
-//		}
-//		
-//		if(phoneNumber!=null) {
-//			phoneNumber = "%" + phoneNumber + "%";
-//			if(imaArgumenata)
-//				whereSql.append(" AND ");
-//			whereSql.append("phoneNumber LIKE ?");
-//			imaArgumenata = true;
-//			listaArgumenata.add(phoneNumber);
-//		}
-//		
-//		if(gender!=null) {
-//			gender = "%" + gender + "%";
-//			if(imaArgumenata)
-//				whereSql.append(" AND ");
-//			whereSql.append("gender LIKE ?");
-//			imaArgumenata = true;
-//			listaArgumenata.add(gender);
-//		}
-//		
-//		if(dateOfBirth!=null) {
-//			if(imaArgumenata)
-//				whereSql.append(" AND ");
-//			whereSql.append("dateOfBirth LIKE ?");
-//			imaArgumenata = true;
-//			listaArgumenata.add(dateOfBirth);
-//		}
-//		
-//		if(administrator!=null) {	
-//			String administratorSql = (administrator)? "administrator = 1": "administrator >= 0";
-//			if(imaArgumenata)
-//				whereSql.append(" AND ");
-//			whereSql.append(administratorSql);
-//			imaArgumenata = true;
-//		}
-//		
-//		if(registrationDate!=null) {
-//			if(imaArgumenata)
-//				whereSql.append(" AND ");
-//			whereSql.append("registrationDate LIKE ?");
-//			imaArgumenata = true;
-//			listaArgumenata.add(registrationDate);
-//		}
-//
-//		
-//		if(imaArgumenata)
-//			sql=sql + whereSql.toString()+" ORDER BY username";
-//		else
-//			sql=sql + " ORDER BY username";
-//		System.out.println(sql);
-//		
-//		return jdbcTemplate.query(sql, listaArgumenata.toArray(), new UserRowMapper());
-//	}
 	
 
 }
