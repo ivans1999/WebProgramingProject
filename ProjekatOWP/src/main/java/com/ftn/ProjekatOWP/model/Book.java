@@ -1,10 +1,12 @@
 package com.ftn.ProjekatOWP.model;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+//import com.mysql.cj.jdbc.Blob;
 
 public class Book {
 	
@@ -15,12 +17,15 @@ public class Book {
 	private String author;
 	private String yearOfPublication;
 	private String description;
-	private byte[] image;
+	private String image;
 	private Double price;
 	private Integer numberOfPages;
 	private String typeOfCover;
 	private String letter;
 	private Integer numberOfBooks;
+	
+	
+	private List<Genre> genres = new ArrayList<>();
 
 
 	public Book() {}
@@ -28,7 +33,7 @@ public class Book {
 
 
 	public Book(Long id, String iSBN, String name, String publishingHouse, String author, String yearOfPublication,
-			String description, byte[] image, Double price, Integer numberOfPages, String typeOfCover, String letter,Integer numberOfBooks) {
+			String description, String image, Double price, Integer numberOfPages, String typeOfCover, String letter,Integer numberOfBooks) {
 		super();
 		this.id = id;
 		ISBN = iSBN;
@@ -49,7 +54,7 @@ public class Book {
 
 
 	public Book(String iSBN, String name, String publishingHouse, String author, String yearOfPublication,
-			String description, byte[] image, Double price, Integer numberOfPages, String typeOfCover, String letter) {
+			String description, String image, Double price, Integer numberOfPages, String typeOfCover, String letter) {
 		super();
 		ISBN = iSBN;
 		this.name = name;
@@ -125,12 +130,12 @@ public class Book {
 		this.description = description;
 	}
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
@@ -166,8 +171,15 @@ public class Book {
 	public void setLetter(String letter) {
 		this.letter = letter;
 	}
-	
 
+	public List<Genre> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(List<Genre> genres) {
+		this.genres.clear();
+		this.genres.addAll(genres);
+	}
 
 	public Integer getNumberOfBooks() {
 		return numberOfBooks;
@@ -179,19 +191,28 @@ public class Book {
 	}
 
 
+	
+	
+	@Transient
+	public String getImagePath() {
+		if (image == null || id == null) 
+			
+			return null;
+		
+		return "images/" + image;
+	}
+	
+
 
 
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", ISBN=" + ISBN + ", name=" + name + ", publishingHouse=" + publishingHouse
 				+ ", author=" + author + ", yearOfPublication=" + yearOfPublication + ", description=" + description
-				+ ", image=" + Arrays.toString(image) + ", price=" + price + ", numberOfPages=" + numberOfPages
+				+ ", image=" + image + ", price=" + price + ", numberOfPages=" + numberOfPages
 				+ ", typeOfCover=" + typeOfCover + ", letter=" + letter + ", numberOfBooks=" + numberOfBooks
-				+ "]";
+				+ ", genres=" + genres + "]";
 	}
-
-
-
 
 
 
@@ -221,6 +242,8 @@ public class Book {
 	}
 	
 }
+	
+	
 	
 	
 	

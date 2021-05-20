@@ -3,7 +3,7 @@ package com.ftn.ProjekatOWP.model;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
+//import org.springframework.format.annotation.DateTimeFormat;
 
 public class User {
 	
@@ -16,6 +16,11 @@ public class User {
 	private Date registrationDate;
 	
 	private boolean administrator = false;
+	
+	private boolean block = false;
+	
+	
+	
 	
 	public User(String name, String lastname, String username, String password, String email, String address,
 			String phoneNumber, String gender, LocalDateTime dateOfBirth, Date registrationDate) {
@@ -47,6 +52,25 @@ public class User {
 		this.registrationDate = registrationDate;
 		this.administrator = administrator;
 	}
+	
+	public User(String name, String lastname, String username, String password, String email, String address,
+			String phoneNumber, String gender, LocalDateTime dateOfBirth, Date registrationDate, boolean administrator, boolean block) {
+		super();
+		this.name = name;
+		this.lastname = lastname;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+		this.registrationDate = registrationDate;
+		this.administrator = administrator;
+		this.block = block;
+	}
+
+	
 
 	public String getName() {
 		return name;
@@ -136,14 +160,25 @@ public class User {
 		this.administrator = administrator;
 	}
 
+	
+	public boolean isBlock() {
+		return block;
+	}
+
+	public void setBlock(boolean block) {
+		this.block = block;
+	}
+
+	
+	
 	@Override
 	public String toString() {
 		return "User [name=" + name + ", lastname=" + lastname + ", username=" + username + ", password=" + password
 				+ ", email=" + email + ", address=" + address + ", phoneNumber=" + phoneNumber + ", gender=" + gender
 				+ ", dateOfBirth=" + dateOfBirth + ", registrationDate=" + registrationDate + ", administrator="
-				+ administrator + "]";
+				+ administrator + ", block=" + block + "]";
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
