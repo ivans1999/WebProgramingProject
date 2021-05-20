@@ -27,23 +27,34 @@ public class BookDAOImpl implements BookDAO{
 	@Override
 	public Book findOne(Long id) {
 		String sql =
-				"SELECT b.id, b.ISBN, b.name, b.publishingHouse, b.author, b.yearOfPublication, b.description , b.price, b.numberOfPages, b.typeOfCover, b.letter, b.numberOfBooks "
+				"SELECT b.id, b.ISBN, b.name, b.publishingHouse, b.author, b.yearOfPublication, b.description, b.image , b.price, b.numberOfPages, b.typeOfCover, b.letter, b.numberOfBooks "
 				+"FROM books b "
-				+"WHERE b.id = ? "
+				+"WHERE b.id = ? AND b.numberOfBooks > 0 "
 				+"ORDER BY b.id";
 		return jdbcTemplate.queryForObject(sql, new BookRowMapper(), id);
 	}
 	
 	
+//	@Override
+//	public Book findOne1(String ISBN) {
+//		String sql =
+//				"SELECT b.id,  b.ISBN, b.name, b.publishingHouse, b.author, b.yearOfPublication, b.description , b.price, b.numberOfPages, b.typeOfCover, b.letter, b.numberOfBooks "
+//				+"FROM books b "
+//				+"WHERE b.ISBN = ? "
+//				+"ORDER BY b.ISBN";
+//		return jdbcTemplate.queryForObject(sql, new BookRowMapper(), ISBN);
+//	}
+	
+	
 
 	@Override
-	public List<Book> find(String ISBN, String name, String publishingHouse, String author, String yearOfPublication, String description, byte[] image, Double price, Integer numberOfPages, String typeOfCover, String letter, Integer numberOfBooks) {
+	public List<Book> find(String ISBN, String name, String publishingHouse, String author, String yearOfPublication, String description, String image, Double price, Integer numberOfPages, String typeOfCover, String letter, Integer numberOfBooks) {
 		
 		ArrayList<Object> listaArgumenata = new ArrayList<Object>();
 		
-		String sql = "SELECT id, ISBN, name, publishingHouse, author, yearOfPublication, description , price, numberOfPages, typeOfCover, letter, numberOfBooks FROM books ";
+		String sql = "SELECT id, ISBN, name, publishingHouse, author, yearOfPublication, description, image , price, numberOfPages, typeOfCover, letter, numberOfBooks FROM books ";
 		
-		StringBuffer whereSql = new StringBuffer(" WHERE ");
+		StringBuffer whereSql = new StringBuffer(" WHERE numberOfBooks > 0 AND ");
 		boolean imaArgumenata = false;
 		
 		if(name!=null) {
@@ -72,13 +83,33 @@ public class BookDAOImpl implements BookDAO{
 			imaArgumenata = true;
 			listaArgumenata.add(price);
 		}
+
+		if(ISBN!=null) {
+			ISBN = "%" + ISBN + "%";
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("ISBN LIKE ?");
+			imaArgumenata = true;
+			listaArgumenata.add(ISBN);
+		}
 		
+		if(numberOfBooks!=null) {
+			if(imaArgumenata)
+				whereSql.append(" AND ");
+			whereSql.append("numberOfBooks > 0");
+			imaArgumenata = true;
+			listaArgumenata.add(numberOfBooks);
+		}
 		
 		
 		if(imaArgumenata)
-			sql=sql + whereSql.toString()+" ORDER BY id";
+			
+			sql=sql + whereSql.toString()+" ORDER BY id ";
+		
 		else
-			sql=sql + " ORDER BY id";
+			
+//			sql=sql + " WHERE  numberOfBooks > 0 ";
+			sql=sql + " WHERE  numberOfBooks > 0 ORDER BY id";
 		System.out.println(sql);
 		
 		return jdbcTemplate.query(sql, listaArgumenata.toArray(), new BookRowMapper());
@@ -109,7 +140,10 @@ public class BookDAOImpl implements BookDAO{
 			String yearOfPublication = rs.getString(index++);
 			String description = rs.getString(index++);
 			
-			byte[] image = rs.getBytes(1);
+			String image = rs.getString(index++);
+//			byte[] image = rs.getBytes(1);
+			
+
 			
 			Double price = rs.getDouble(index++);
 			Integer numberOfPages = rs.getInt(index++);
@@ -148,5 +182,6 @@ public class BookDAOImpl implements BookDAO{
 	
 	
 }
+
 
 
