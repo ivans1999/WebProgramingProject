@@ -96,4 +96,36 @@ public class ShoppingCartController {
 		return rezultat;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@PostMapping(value="/Remove")
+	@SuppressWarnings("unchecked")
+	public ModelAndView remove(@RequestParam Long id, 
+			HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	
+
+		Book book = bookService.findOne(id);
+		
+		List<Book> bookSelected = (List<Book>) session.getAttribute(ShoppingCartController.CHOOSEN_BOOKS_FOR_USER_KEY);
+		if(bookSelected.contains(book)) {
+	        bookSelected.remove(book);     
+	      }
+		
+	    			
+
+		ModelAndView rezultat = new ModelAndView("shoppingCart");
+		
+		return rezultat;
+	}
+	
+	
+
+	
 }

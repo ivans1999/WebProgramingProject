@@ -12,6 +12,7 @@ import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ftn.ProjekatOWP.model.Book;
 import com.ftn.ProjekatOWP.model.User;
 import com.ftn.ProjekatOWP.service.UserService;
 
@@ -36,6 +38,11 @@ public class UserController {
 	
 	public static final String USER_KEY = "loggedInUser";
 	
+//	public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd. HH:mm");
+//	public static final String minDate = LocalDate.MIN.format(DateTimeFormatter.ofPattern("dd.MM.yyyy."));
+//	public static final String maxDate = LocalDate.MAX.format(DateTimeFormatter.ofPattern("dd.MM.yyyy."));
+//	public static final String minTime = LocalTime.MIN.format(DateTimeFormatter.ofPattern("HH:mm"));
+//	public static final String maxTime = LocalTime.MAX.format(DateTimeFormatter.ofPattern("HH:mm"));
 	
 	
 	@Autowired
@@ -50,6 +57,185 @@ public class UserController {
 		baseURL = servletContext.getContextPath() + "/";			
 	}
 	
+	
+	
+	// ---------------------------- LISTA KORISNIKA
+	
+	
+	  @GetMapping public ModelAndView index( 
+			  			@RequestParam(required=false) String username, @RequestParam(required=false) String name,
+			  			@RequestParam(required=false) String lastname, @RequestParam(required=false) String email, 
+			  			@RequestParam(required=false) String address,
+			  			@RequestParam(required=false) String phoneNumber, @RequestParam(required=false) String gender, 
+			  			@RequestParam(required=false) LocalDateTime dateOfBirth,
+			  			@RequestParam(required=false) Boolean administrator, @RequestParam(required=false) Date registrationDate,
+			  			@RequestParam(required=false) Boolean block,
+			  			HttpSession session, HttpServletResponse response) throws IOException {
+	  
+	  
+		  User loggedInUser = (User) session.getAttribute(UserController.USER_KEY);
+		  
+		  if (loggedInUser == null || !loggedInUser.isAdministrator()) {
+			  
+			  response.sendRedirect(baseURL); 
+			  return null; 
+			  }
+		  
+		  if(username!=null && username.trim().equals("")) 
+			  username=null;
+		  
+		  if(name!=null && name.trim().equals("")) 
+			  name=null;
+		  
+		  if(lastname!=null && lastname.trim().equals("")) 
+			  lastname=null;
+		  
+		  if(email!=null && email.trim().equals("")) 
+			  email=null;
+		  
+		  if(address!=null && address.trim().equals("")) 
+			  address=null;
+		  
+		  if(phoneNumber!=null && phoneNumber.trim().equals("")) 
+			  phoneNumber=null;
+		  
+		  if(gender!=null && gender.trim().equals("")) 
+			  gender=null;
+	  
+	  
+	  
+	  
+	  List<User> users = userService.find(username, name, lastname, email, address,
+			  								phoneNumber, gender, dateOfBirth ,registrationDate, administrator, block);
+	  
+	  
+	  ModelAndView rezultat = new ModelAndView("users");
+	  rezultat.addObject("users", users);
+	  
+	  return rezultat;
+	 
+	  }
+	
+	  
+	// ---------------------------- DETAILS
+	
+	@GetMapping(value="/Details")
+	public ModelAndView details(@RequestParam String username, 
+			HttpSession session, HttpServletResponse response) throws IOException {		
+		
+		User loggedInUser = (User) session.getAttribute(UserController.USER_KEY);
+		
+		
+		// samo administrator može da vidi druge korisnike; svaki korisnik može da vidi sebe
+		
+		if (loggedInUser == null || (!loggedInUser.isAdministrator() && !loggedInUser.getUsername().equals(username))) {
+			response.sendRedirect(baseURL + "Users");
+			return null;
+		}
+
+	
+		User user = userService.findOne(username);
+		if (user == null) {
+			response.sendRedirect(baseURL + "Users");
+			return null;
+		}
+
+	
+		ModelAndView rezultat = new ModelAndView("user");
+		rezultat.addObject("user", user);
+
+		return rezultat;
+	}
+	
+	
+	
+	
+	// ---------------------------- EDIT USER 
+	
+	
+	@PostMapping(value="/Edit")
+	public void Edit(@RequestParam String username, @RequestParam Boolean administrator, @RequestParam Boolean block,
+					  HttpSession session, HttpServletResponse response) throws IOException {
+		
+		
+		
+		
+		User loggedInUser = (User) session.getAttribute(UserController.USER_KEY);
+		if (loggedInUser == null || !loggedInUser.isAdministrator()) {
+			response.sendRedirect(baseURL + "Users");
+			return;
+		}
+
+		
+		
+		User user = userService.findOne(username);
+		if (user == null) {
+			response.sendRedirect(baseURL + "Users");
+			return;
+		}
+		
+		user.setAdministrator(administrator);
+		userService.update(user);
+		
+	
+//		user.setBlock(block);
+//		userService.update1(user);
+		
+		User user1 = userService.findOne1(username);
+		if (user1 != null ) {
+			
+			
+			user1.setBlock(block);
+			userService.update1(user1);
+			
+			
+			response.sendRedirect(baseURL + "Users");
+			return;
+			
+		}
+		
+		
+		
+		
+		System.out.println("bbbb");
+		
+		
+		
+		response.sendRedirect(baseURL + "Users");
+	}
+	
+	
+	@GetMapping(value="/Profile")
+	public ModelAndView profile(@RequestParam String username, 
+			HttpSession session, HttpServletResponse response) throws IOException {		
+		
+		User loggedInUser = (User) session.getAttribute(UserController.USER_KEY);
+		
+		
+		if (loggedInUser == null || (!loggedInUser.getUsername().equals(username))) {
+			response.sendRedirect(baseURL);
+			return null;
+		}
+
+	
+		User user = userService.findOne(username);
+		if (user == null) {
+			response.sendRedirect(baseURL);
+			return null;
+		}
+
+	
+		ModelAndView rezultat = new ModelAndView("profile");
+		rezultat.addObject("user", user);
+
+		return rezultat;
+	}
+	
+	
+	
+
+	
+	// ---------------------------- REGISTRACIJA 
 	
 	@PostMapping(value="/Register")
 	public ModelAndView register(@RequestParam String username, @RequestParam String name, @RequestParam String lastname, 
@@ -71,10 +257,12 @@ public class UserController {
 			
 			
 			// validacija
+			
 			User existUser = userService.findOne(username);
 			if (existUser != null) {
 				throw new Exception("Username already exists!");
 			}
+			
 			if (username.equals("") || password.equals("")) {
 				throw new Exception("Username or password must not be blank!");
 			}
@@ -128,17 +316,37 @@ public class UserController {
 		}
 	}
 	
+	
+	// ---------------------------- LOGIN
+	
 	@PostMapping(value="/Login")
 	public ModelAndView postLogin(@RequestParam String username, @RequestParam String password, 
 			HttpSession session, HttpServletResponse response) throws IOException {
 		try {
 			
-
+			/* Ako je User vec ulogovan */
+			User loggedInUser = (User) session.getAttribute(UserController.USER_KEY);  
+			if (loggedInUser != null) { 
+			
+				throw new Exception("You have to Log Out!");
+			 }
+		
+			
+			/* Pronalazi Usera */
 			User user = userService.findOne(username, password);
 			if (user == null) {
 				throw new Exception("Invalid username or password!");
-			}			
-
+			}	
+			
+			
+			/* BLOKIRAN Korisnik */
+			User user1 = userService.findOne3(username, password);
+			if (user1 == null) {
+				throw new Exception("Your account is blocked!");
+			}	
+			
+			
+		
 
 			session.setAttribute(UserController.USER_KEY, user);
 			response.sendRedirect(baseURL);
@@ -152,7 +360,8 @@ public class UserController {
 				poruka = "Neuspešna prijava!";
 			}
 			
-	
+			
+			/* Prosledjivanje */
 			ModelAndView rezultat = new ModelAndView("index.html");
 			rezultat.addObject("poruka", poruka);
 
@@ -160,14 +369,22 @@ public class UserController {
 		}
 	}
 
-	@GetMapping(value="/Logout")
-	public void logout(HttpSession session, HttpServletResponse response) throws IOException {
-		
 	
-		session.invalidate();
+	// ---------------------------- LOG OUT
+	
+	@GetMapping(value="/Logout")
+	public void logout( HttpServletResponse response,HttpServletRequest request) throws IOException {
+			
+		
+//		session.invalidate();
+		
+		request.getSession(true).removeAttribute("loggedInUser");
+		
+//		request.getSession(true).invalidate();
 		
 		response.sendRedirect(baseURL);
+		
 	}
+	
 
 }
-
