@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- basic -->
+    <meta charset="utf-8">
+    
+   	<base th:href="@{/}">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    
+    <title>About Us - Books & Bookshelves</title>
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- owl css -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="css/styleAbout.css">
+    <!-- responsive-->
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- awesome fontfamily -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+<!-- body -->
+
+<body class="main-layout">
+
+ <div class="wrapper">
+    
+         <div class="sidebar">
+                <!-- Sidebar  -->
+                <nav id="sidebar">
+    
+                    <div id="dismiss">
+                        <i class="fa fa-arrow-left"></i>
+                    </div>
+    
+                    <ul class="list-unstyled components">
+    
+                        <li >
+                            <a href="">Books & Bookshelves</a>
+                        </li>
+                        
+                        <li>
+                            <a href="books">All Books</a>
+                        </li>
+                        
+                        <li th:if="${session.loggedInUser != null and session.loggedInUser.administrator}">
+                       
+						<a href="books/Create">Add Book</a>
+						
+						</li>
+                        
+                        
+                        <li>
+                            <a href="about.html">About Us</a>
+                        </li>
+                 
+                       
+                       <li th:if="${session.loggedInUser != null and session.loggedInUser.administrator}">
+                       
+						<a href="Users">Users</a>
+						
+						</li>
+                       
+                        <li>
+                            <a class="cart" href="ShoppingCart/Details">Shopping Cart</a>
+                        </li>
+                        
+                         <li th:if="${session.loggedInUser != null}" >
+                         
+                            <a href="Users/Logout">Log Out</a>
+                        </li>
+                        
+                        
+                         <li class="user" th:unless="${session.loggedInUser == null}" >
+                        
+                            <a th:href="|Users/Details?username=${session.loggedInUser.username}|">Profile &nbsp;-> &nbsp;<span th:text="${session.loggedInUser.username}"></span> </a>
+                        </li>
+                        
+                        <li class="user" th:unless="${session.loggedInUser == null or session.loggedInUser.administrator}" >
+                        
+                        <form method="" action="WishList">
+                            <button type="submit" class="wishSidebar">Wish List &nbsp;:))</button>
+                            <input type="hidden" name="username" th:value="${session.loggedInUser.username}"/>
+                        </form>
+                        
+                        </li>
+                        
+                    </ul>
+    
+                </nav>
+            </div>
+
+	</div>
+
+
+
+
+
+        <div id="content" >
+        <!-- header -->
+        <header id="header">
+            <div class="container-fluid">
+                <div class="row" >
+                    <div class="col-md-3">
+                        <div class="full">
+                            <a class="logo" href=""><img class="logo" src="images/logo.png" alt="#" /></a>
+                        
+                        </div>
+                    </div>
+                    <div class="col-md-9" >
+                        <div class="full">
+                            <div   class="right_header_info">
+                                <ul>
+                                    <li class="dinone">Contact Us : <img style="margin-right: 15px;margin-left: 15px;" src="images/phone.png" alt="#">+381 64 2 590 743</li>
+                                    <li class="dinone"><img style="margin-right: 15px;" src="images/email.png" alt="#"><a href="#">books&bookshelves@gmail.com</a></li>
+                                    <li class="dinone"><img style="margin-right: 15px;height: 21px;position: relative;top: -2px;" src="images/location.png" alt="#"><a href="#">11000 Belgrade , Serbia</a></li>
+                                    <li class="button_user"><a class="button active"  onclick="openLoginForm()" >Login</a>
+                                    						<a class="button" onclick="openRegisterForm()" >Register</a></li>
+                                    
+                                    <li>
+                                        <button type="button" id="shopCart">
+                                            <img src="images/cart.png" alt="#">
+                                        </button>
+                                    </li>
+
+                                    <li>
+                                        <button type="button" id="sidebarCollapse">
+                                            <img src="images/sidebar.png" alt="#">
+                                        </button>
+                                    </li>
+                                    <li>
+								<p class="greska" th:text="${poruka}"></p>
+								</li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+    <!--------------------------  LOGIN ---------------->
+       <form method="post" action="Users/Login">
+       
+	     <div class="center">
+	    </div>
+	    <div class="popup-overlay" onclick="closeLoginForm()"></div>
+	    <div class="popup" >
+	      <div class="popup-close" onclick="closeLoginForm()">&times;</div>
+	      
+	     
+	      
+	      <div class="form">
+	        <div class="avatar">
+	          <img src="images/logo.png" alt="">
+	        </div>
+	        <div class="header">Member Login</div>
+	
+	        <div class="element">
+	          <label for="username">Username</label>
+	          <input type="text" id="username" name="username">
+	        </div>
+	        <div class="element">
+	          <label for="password">Password</label>
+	          <input type="password" id="password" name="password" >
+	        </div>
+	        <div class="element">
+	          <button type="submit">Login</button>
+	        </div>
+	        <div class="reg">Not a member?&nbsp;<a href="#" onclick="openRegisterForm()" class="reg2">Sign Up Now</a></div>
+	      </div>
+	    
+	      
+	    </div>
+
+ 	 </form> 
+    <!-------------------  REGISTER ----------------------------------->
+    
+	<form method="post" action="Users/Register">
+	
+	    <div class="center1">
+		  </div>
+		  <div class="popup-overlay1" onclick="closeRegisterForm()"></div>
+		  <div class="popup1" >
+		    <div class="popup-close1" onclick="closeRegisterForm()" >&times;</div>
+		    <div class="form1" >
+		      <div class="avatar1">
+		        <img src="images/logo.png" alt="">
+		      </div>
+	      <div class="header1">Member Registration</div>
+			
+			<div class="element1">
+	        <label for="name1">Name</label>
+	        <input type="text" id="username1" name="name">
+	      </div>
+	      <div class="element1">
+	        <label for="lastname1">Lastname</label>
+	        <input type="text" id="password1" name="lastname">
+	      </div>
+	       <div class="element1">
+	        <label for="username1">Username</label>
+	        <input type="text" id="username1" name="username">
+	      </div>
+	      <div class="element1">
+	        <label for="email1">Email</label>
+	        <input type="text" id="username1" name="email">
+	      </div>
+	      
+	        <div class="element1">
+	        <label for="address1">Address</label>
+	        <input type="text" id="username1" name="address">
+	      </div>
+	      
+	      <div class="element1">
+	        <label for="date1">Date Of Birth</label>
+	        <input type="datetime-local"  name="dateOfBirth">
+	      </div>
+	      
+	      
+	       
+	      
+	      <div class="element2" >
+	        <label for="address1" class="gen1">Gender</label>
+	        <input class="gen2" type="radio" name="gender" value="male" checked/><span class="malfem">Male</span>&nbsp;
+			<input class="gen2" type="radio" name="gender" value="female"/><span class="malfem">Female</span>
+	      </div> 
+	      
+	      <div class="element1">
+	        <label for="address1">Phone Number</label>
+	        <input type="text" id="username1" name="phoneNumber">
+	      </div>
+	   
+	      
+	      <div class="element1">
+	        <label for="password">Password</label>
+	        <input type="password" id="password1"  name="password" >
+	      </div>
+	      
+	       <div class="element1">
+	        <label for="password">Repeted Password</label>
+	        <input type="password" id="password1" name="repetedPassword"/>
+	      </div>
+	      
+	      
+	      
+	      <div class="element1">
+	        <button type="submit">Register</button>
+	      </div>
+	    </div>
+	  </div>
+	  </form>
+
+    <script>
+
+        function openLoginForm(){
+        document.body.classList.add("showLoginForm");
+        document.body.classList.remove("showRegisterForm");
+        }
+        function closeLoginForm(){
+        document.body.classList.remove("showLoginForm");
+        }
+
+        function closeLoginForm(){
+        document.body.classList.remove("showLoginForm");
+        }
+
+
+        function openRegisterForm(){
+        document.body.classList.add("showRegisterForm");
+        document.body.classList.remove("showLoginForm");
+        }
+
+        function closeRegisterForm(){
+        document.body.classList.remove("showRegisterForm");
+        }
+
+        function closeRegisterForm(){
+        document.body.classList.remove("showRegisterForm");
+        }
+        </script>
+
+<!-- end header -->
+
+
+
+
+
+
+<div class="yellow_bg">
+   <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="title">
+                    <h2>About Us</h2>
+                    <h1>Books & Bookshelves</h1>
+                  </div>
+               </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+<!-- Quotes Start -->
+<div class="about">
+    <div class="container">
+
+        <div class="title1">
+
+            <div id="quote">“You only live once, but if you do it right, once is enough.” ― Mae West</div>
+          
+            <button onclick="newQuote()"  class="btn-quote">Inspiring...<i class="em em-leaves" aria-role="presentation" aria-label="LEAF FLUTTERING IN WIND"></i></button>
+  
+            <script>
+  
+                  var quotes=[
+  
+                  '“Always forgive your enemies; nothing annoys them so much.” ― Oscar Wilde',
+                  '“You are in charge of your own happiness; you don\'t need to wait for other people\'s permission to be happy.” ― Roy T. Bennett',
+                  '“To live is the rarest thing in the world. Most people exist, that is all.” ― Oscar Wilde',
+                  '“I am so clever that sometimes I don\'t understand a single word of what I am saying.” ― Oscar Wilde',
+                  '“You only live once, but if you do it right, once is enough.” ― Mae West',
+                  '“Knowing yourself is the beginning of all wisdom.” ― Aristotle',
+                  '“The only true wisdom is in knowing you know nothing.” ― Socrates',
+                  '“I have always imagined that Paradise will be a kind of library.” ― Jorge Luis Borges',
+                  '“When someone loves you, the way they talk about you is different. You feel safe and comfortable.” ― Jess C. Scott',
+                  '“Count your age by friends, not years. Count your life by smiles, not tears.” ― John Lennon',
+                  '“May you live every day of your life.” ― Jonathan Swift',
+                  '“I find television very educating. Every time somebody turns on the set, I go into the other room and read a book.” ― Groucho Marx',
+                  '“Never laugh at live dragons.” ― J.R.R. Tolkien',
+                  '“The secret of life, though, is to fall seven times and to get up eight times.” ― Paulo Coelho',
+                  '“Think before you speak. Read before you think.” ― Fran Lebowitz',
+                  '“Any fool can know. The point is to understand.” ― Albert Einstein',
+                  '“The unexamined life is not worth living.” ― Socrates',
+                  '“Turn your wounds into wisdom.” ― Oprah Winfrey',
+                  '“Angry people are not always wise.” ― Jane Austen',
+                  '“God will not look you over for medals, degrees or diplomas but for scars.” ― Elbert Hubbard',
+                  '“The measure of intelligence is the ability to change.” ― Albert Einstein',
+                  '“You will do foolish things, but do them with enthusiasm.” ― Colette',
+                  '“I\'m not young enough to know everything.” ― J.M. Barrie',
+                  '“The past has no power over the present moment.” ― Eckhart Tolle',
+                  '“Failure is the condiment that gives success its flavor.” ― Truman Capote',
+                  '“Don\'t waste your time with explanations: people only hear what they want to hear.” ― Paulo Coelho',
+                  '“Don\'t Gain The World & Lose Your Soul, Wisdom Is Better Than Silver Or Gold.” ― Bob Marley',
+                  '“Knowledge speaks, but wisdom listens” ― Jimi Hendrix',
+                  '“We learn from failure, not from success!” ― Bram Stoker',
+                  '“The more I read, the more I acquire, the more certain I am that I know nothing.” ― Voltaire',
+                  '“Never, never, never give in!” ― Winston S. Churchill',
+                  '“We live in an age when unnecessary things are our only necessities.” ― Oscar Wilde',
+                  '“All knowledge hurts.” ― Cassandra Clare',
+                  '“Authority without wisdom is like a heavy axe without an edge, fitter to bruise than polish.” ― Anne Bradstreet',
+                  '“Half of seeming clever is keeping your mouth shut at the right times.” ― Patrick Rothfuss',
+                  '“Life would be tragic if it weren\'t funny.” ― Stephen Hawking',
+                  '“Reality continues to ruin my life.” ― Bill Watterson',
+                  '“Unbeing dead isn\'t being alive.” ― E. E. Cummings',
+                  '“Tell the truth, or someone will tell it for you.” ― Stephanie Klein',
+                  '“All human wisdom is contained in these two words - Wait and Hope” ― Alexandre Dumas',
+                  '“The most wasted of all days is one without laughter.” ― Nicolas Chamfort',
+                  '“I\'ve got nothing to do today but smile.” ― Simon and Garfunkel',
+                  '“That it will never come again is what makes life so sweet.” ― Emily Dickinson',
+                  '“You realize that our mistrust of the future makes it hard to give up the past.” ― Chuck Palahniuk',
+                  '“It does not matter how slowly you go as long as you do not stop.” ― Confucius',
+                  '“Perhaps one did not want to be loved so much as to be understood.” ― George Orwell',
+                  '“The best lies were always mixed with truth.” ― Sarah J. Maas',
+                  '“A man\'s true character comes out when he\'s drunk.” ― Charlie Chaplin',
+                  '“Our truest life is when we are in dreams awake.” ― Henry David Thoreau',
+                  '“There is no greatness where there is not simplicity, goodness, and truth.” ― Leo Tolstoy',
+                  '“You don’t believe things because they make your life better, you believe them because they’re true.” ― Veronica Roth',
+                  '“Trust starts with truth and ends with truth.” ― Santosh Kalwar',
+                  '“What\'s meant to be will always find a way” ― Trisha Yearwood',
+                  '“The soul is healed by being with children.” ― Fyodor Dostoevsky',
+                  '“It\'s hard to beat a person who never gives up.” ― George Herman Ruth',
+                  '“When someone tells me "no," it doesn\'t mean I can\'t do it, it simply means I can\'t do it with them.” ― Karen E. Quinones Miller',
+                  '“Our wounds are often the openings into the best and most beautiful part of us.” ― David Richo',
+                  '“When all is said and done, more is said than done.” ― Lou Holtz',
+                  '“Even if I knew that tomorrow the world would go to pieces, I would still plant my apple tree.” ― Martin Luther',
+                  '“Nothing can disturb your peace of mind unless you allow it to.” ― Roy T. Bennett',
+                  '“The surest way to make your dreams come true is to live them.” ― Roy T. Bennett',
+                  '“Imagination is the highest form of research.” ― Albert Einstein',
+                  '“When we give cheerfully and accept gratefully, everyone is blessed.” ― Maya Angelou',
+                  '“Always remember, your focus determines your reality.” ― George Lucas',
+                  '“No matter how bad things are, you can always make things worse.” ― Randy Pausch',
+                  '“Everyone wants to live on top of the mountain, but all the happiness and growth occurs while you\'re climbing it.” ― Andy Rooney',
+                  '“The first and final thing you have to do in this world is to last it and not be smashed by it.” ― Ernest Hemingway',
+                  '“Take it easy, but take it.” ― Woody Guthrie',
+                  '“You will never follow your own inner voice until you clear up the doubts in your mind.” ― Roy T. Bennett',
+                  '“We all pay for life with death, so everything in between should be free.” ― Bill Hicks',
+                  '“A book is a device to ignite the imagination.” ― Alan Bennett',
+                  '“Happy is the man who has broken the chains which hurt the mind, and has given up worrying once and for all. Be patient and tough; one day this pain will be useful to you.” ― Ovid',
+                  '“Rule your mind or it will rule you.” ― Horace'
+                  ];
+  
+                  function newQuote(){
+
+                    $(function() {
+
+                        $('#quote').fadeOut(650, function() {
+                            var randomNumber = Math.floor(Math.random() * (quotes.length));
+                            document.getElementById('quote').innerHTML = quotes[randomNumber];
+                        });
+                        $('#quote').fadeIn(450, function() {
+                
+                        
+                        });
+
+                        });
+                  }
+               
+  
+            </script>
+  
+          </div>
+        </div>
+          
+       </div> 
+
+<!-- Quotes End -->
+
+<div class="divBig">
+    
+    <div class="text">
+
+        <span class="naslov"> Quotation and Reading Books :) </span>
+        <p class="glavniText">A quotation is the repetition of a sentence, phrase, or passage from speech or text that someone has said or written.</p>
+        <p class="maliText">Quotations are often used as a literary device to represent someone's point of view. They are also widely used in spoken language when an interlocutor wishes to present a proposition that they have come to know via hearsay.</p>
+        <br>
+        <span class="naslov2"> Mental Stimulation </span>
+        <p class="glavniText">Studies have shown that staying mentally stimulated can slow the progress of (or possibly even prevent) Alzheimer’s and Dementia, since keeping your brain active and engaged prevents it from losing power.</p>
+        <p class="maliText2">Just like any other muscle in the body, the brain requires exercise to keep it strong and healthy, so the phrase “use it or lose it” is particularly apt when it comes to your mind. Doing puzzles and playing games such as chess have also been found to be helpful with cognitive stimulation.</p>
+        <br>
+        <span class="naslov2"> Stress Reduction </span>
+        <p class="maliText2">No matter how much stress you have at work, in your personal relationships, or countless other issues faced in daily life, it all just slips away when you lose yourself in a great story. A well-written novel can transport you to other realms, while an engaging article will distract you and keep you in the present moment, letting tensions drain away and allowing you to relax.</p>
+        <br>
+        <span class="naslov2"> Vocabulary Expansion </span>
+        <p> The more you read, the more words you gain exposure to, and they’ll inevitably make their way into your everyday vocabulary.</p>
+        <p class="maliText2">Being articulate and well-spoken is of great help in any profession, and knowing that you can speak to higher-ups with self-confidence can be an enormous boost to your self-esteem. It could even aid in your career, as those who are well-read, well-spoken, and knowledgeable on a variety of topics tend to get promotions more quickly (and more often) than those with smaller vocabularies and lack of awareness of literature, scientific breakthroughs, and global events.
+                            Reading books is also vital for learning new languages, as non-native speakers gain exposure to words used in context, which will ameliorate their own speaking and writing fluency.</p>
+         <br>
+        <span class="naslov2"> Memory Improvement </span>
+        <p class="maliText2">When you read a book, you have to remember an assortment of characters, their backgrounds, ambitions, history, and nuances, as well as the various arcs and sub-plots that weave their way through every story. That’s a fair bit to remember, but brains are marvellous things and can remember these things with relative ease.   
+        </p>
+        <br>
+        <span class="naslov2"> Improved Focus and Concentration </span>
+        <p> In our internet-crazed world, attention is drawn in a million different directions at once as we multi-task through every day.</p>
+        <p class="maliText2">In a single 5-minute span, the average person will divide their time between working on a task, checking email, chatting with a couple of people (via gchat, skype, etc.), keeping an eye on twitter, monitoring their smartphone, and interacting with co-workers. This type of ADD-like behaviour causes stress levels to rise, and lowers our productivity.
+                             When you read a book, all of your attention is focused on the story—the rest of the world just falls away, and you can immerse yourself in every fine detail you’re absorbing.</p>
+
+            <br><br>
+
+            <span class="naslov3"> Go to <a href="books" class="linkBooks" >All Books</a> and choose One!  </span>
+
+            <br><br>
+    </div>
+
+
+
+
+</div>
+
+
+
+    <!-- footer -->
+    
+    <footer>
+        <div class="footer2">
+            <div class="copyright">
+                <div class="container">
+                    <p>© 2020 All Rights Reserved. Design by Aleksa Vucenovic SF49-2018</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end footer -->
+
+    
+    <div class="overlay"></div>
+    <!-- Javascript files-->
+    
+    
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/custom.js"></script>
+     <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+     
+     <script src="js/jquery-3.0.0.min.js"></script>
+
+     <script type="text/javascript">
+        $(document).ready(function() {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+            $('#dismiss, .overlay').on('click', function() {
+                $('#sidebar').removeClass('active');
+                $('.overlay').removeClass('active');
+            });
+
+            $('#sidebarCollapse').on('click', function() {
+                $(this).children().toggleClass('active');
+                $('#sidebar').toggleClass('active');
+            });
+
+            
+        });
+    </script>
+    
+   
+</body>
+
+
+</html>

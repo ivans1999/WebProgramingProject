@@ -1,13 +1,16 @@
 package com.ftn.ProjekatOWP.service.impl;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ftn.ProjekatOWP.model.Book;
-import com.ftn.ProjekatOWP.service.BookService;
 import com.ftn.ProjekatOWP.dao.BookDAO;
+import com.ftn.ProjekatOWP.model.Book;
+import com.ftn.ProjekatOWP.model.Genre;
+import com.ftn.ProjekatOWP.service.BookService;
+import com.mysql.cj.jdbc.Blob;
 
 @Service
 public class DatabaseBookService implements BookService {
@@ -21,6 +24,11 @@ public class DatabaseBookService implements BookService {
 		return bookDAO.findOne(id);
 	}
 	
+//	@Override
+//	public Book findOne1(String ISBN) {
+//		return bookDAO.findOne1(ISBN);
+//	}
+	
 
 	@Override
 	public List<Book> findAll() {
@@ -30,7 +38,7 @@ public class DatabaseBookService implements BookService {
 	
 	@Override
 	public List<Book> find(String ISBN, String name, String publishingHouse, String author, String yearOfPublication,
-							String description, byte[] image, Double price, Integer numberOfPages, String typeOfCover, String letter, Integer numberOfBooks) {
+							String description, String image, Double price, Integer numberOfPages, String typeOfCover, String letter, Integer numberOfBooks) {
 		
 		
 		return bookDAO.find(ISBN, name, publishingHouse, author, yearOfPublication, description,

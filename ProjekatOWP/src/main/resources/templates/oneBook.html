@@ -1,99 +1,458 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
+    <!-- basic -->
     <meta charset="utf-8">
-    <base th:href="@{/}"> 
+    <base th:href="@{/}">
+    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <title>Prikaz knjige</title>
-</head>
-<body>
-    	<header>
 
-                        <div>
-                            <ul>
-                               	<li><a href="register.html" >Register</a></li>
-                                <li>
-                                <p class="greska" th:text="${poruka}"></p>
-                                </li>
-								<li>
-                          			<a href="Users/Logout">Log Out</a>
-                      			</li>
-                      			<li th:if="${session.loggedInUser == null or not session.loggedInUser.administrator}">
+    <title>One Book - Books & Bookshelves</title>
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+ 
+    <link rel="stylesheet" href="css/styleINDEX.css">
+ 
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
+    
+  
+ 
+</head>
+<!-- body -->
+
+<body class="main-layout blog_page">
+  
+
+     <div class="wrapper">
+    
+         <div class="sidebar">
+                <!-- Sidebar  -->
+                <nav id="sidebar">
+    
+                    <div id="dismiss">
+                        <i class="fa fa-arrow-left"></i>
+                    </div>
+    
+                    <ul class="list-unstyled components">
+    
+                        <li >
+                            <a href="">Books & Bookshelves</a>
+                        </li>
+                        
+                        <li>
+                            <a href="books" th:text="#{index.allBooks}"></a>
+                        </li>
+                        
+                        <li th:if="${session.loggedInUser != null and session.loggedInUser.administrator}">
                        
-									<a href="books/Create">Add Book</a>
+						<a href="books/Create" th:text="#{index.addBook}"></a>
 						
+						</li>
+                        
+                        
+                        <li>
+                            <a href="about.html" th:text="#{index.aboutUs}"></a>
+                        </li>
+                 
+                       
+                       <li th:if="${session.loggedInUser != null and session.loggedInUser.administrator}">
+                       
+						<a href="Users" th:text="#{index.allUsers}"></a>
+						
+						</li>
+						
+						<li th:if="${session.loggedInUser != null and session.loggedInUser.administrator}">
+                       
+						<a href="Comments/ShowCommentsAdmin" th:text="#{index.commentsAdmin}"></a>
+						
+						</li>
+                       
+                        <li>
+                            <a class="cart" href="ShoppingCart">Shopping Cart</a>
+                        </li>
+                        
+                         <li th:if="${session.loggedInUser != null}" >
+                         
+                            <a href="Users/Logout" th:text="#{index.logOut}"></a>
+                        </li>
+                        
+                        
+                         <li class="user" th:unless="${session.loggedInUser == null}" >
+                        
+                            <a th:href="|Users/Profile?username=${session.loggedInUser.username}|" th:text="#{index.profile}"> &nbsp;-> &nbsp;<span th:text="${session.loggedInUser.username}"></span> </a>
+                        </li>
+                        
+                        <li class="user" th:unless="${session.loggedInUser == null or session.loggedInUser.administrator}" >
+                        
+                        <form method="" action="WishList">
+                            <button type="submit" class="wishSidebar" th:text="#{index.wishList}"> &nbsp;:))</button>
+                            <input type="hidden" name="username" th:value="${session.loggedInUser.username}"/>
+                        </form>
+                        
+                        </li>
+                        
+                       </ul>
+                       
+                       
+                       
+                        <!---------  Languages ------------ -->
+                      
+                      <ul  id="locales" name="locales" th:with="language=${#locale.language}">
+                      
+                        <li style="display:none">
+                            <span th:text="${#locale}"></span>
+							<span th:text="#{lang.change}"></span>
+                        </li>
+                        
+                       <!--  <li>
+                            <a value="en" th:text="#{lang.eng}" href="Internationalization/changeToEngland" th:selected="${#strings.equals(#locale.language,'en')}"></a>
+                        </li>
+                        
+                        <li>
+                            <a value="sr" th:text="#{lang.sr}" href="Internationalization/changeToSerbian" th:selected="${#strings.equals(#locale.language,'sr')}"></a>
+                        </li> -->
+                        
+                         <li>
+                            <a  th:text="#{lang.eng}" href="Internationalization/changeToEngland" ></a>
+                        </li>
+                        
+                        <li>
+                            <a  th:text="#{lang.sr}" href="Internationalization/changeToSerbian"></a>
+                        </li>
+                        
+                        
+                        
+                     </ul>
+                     
+                     
+                        
+                </nav>
+            </div>
+
+	</div>
+
+      <div id="content" >
+        <!-- header -->
+        <header id="header">
+            <div class="container-fluid">
+                <div class="row" >
+                   
+                    <div class="col-md-9" >
+                        <div class="full">
+                            <div   class="right_header_info">
+                                <ul>
+                                 <li>
+                                          <a class="logo" href="">BOOKSTORE</a>
+                                    </li>
+                                
+                                  
+                                    <li class="button_user"><a class="button active"  onclick="openLoginForm()" >Login</a>
+                                    						<a class="button" onclick="openRegisterForm()" >Register</a></li>
+                                    
+                                 
+
+                                    
+                                    <li class="dinone" >
+                                        <button type="button" id="sidebarCollapse">
+                                            <img src="images/sidebar.png" alt="#">
+                                        </button>
+                                    </li>
+                                    <li>
+								<p class="greska" th:text="${poruka}"></p>
 								</li>
                                 </ul>
-                            
+                                
+                            </div>
                         </div>
-    </header>
-	<div>
- 
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <!--------------------------  LOGIN ---------------->
+       <form method="post" action="Users/Login">
+       
+	     <div class="center">
+	    </div>
+	    <div class="popup-overlay" onclick="closeLoginForm()"></div>
+	    <div class="popup" >
+	      <div class="popup-close" onclick="closeLoginForm()">&times;</div>
+	      
+	     
+	      
+	      <div class="form">
+	        <div class="avatar">
+	          <img src="images/logo.png" alt="">
+	        </div>
+	        <div class="header">Member Login</div>
+	
+	        <div class="element">
+	          <label for="username">Username</label>
+	          <input type="text" id="username" name="username">
+	        </div>
+	        <div class="element">
+	          <label for="password">Password</label>
+	          <input type="password" id="password" name="password" >
+	        </div>
+	        <div class="element">
+	          <button type="submit">Login</button>
+	        </div>
+	        <div class="reg">Not a member?&nbsp;<a href="#" onclick="openRegisterForm()" class="reg2">Sign Up Now</a></div>
+	      </div>
+	    
+	      
+	    </div>
+
+ 	 </form> 
+    <!-------------------  REGISTER ----------------------------------->
+    
+	<form method="post" action="Users/Register">
+	
+	    <div class="center1">
+		  </div>
+		  <div class="popup-overlay1" onclick="closeRegisterForm()"></div>
+		  <div class="popup1" >
+		    <div class="popup-close1" onclick="closeRegisterForm()" >&times;</div>
+		    <div class="form1" >
+		      <div class="avatar1">
+		        <img src="images/logo.png" alt="">
+		      </div>
+		      
+	      <div class="header1">Member Registration</div>
+			
+			<div class="element1">
+	        <label for="name1">Name</label>
+	        <input type="text" id="username1" name="name">
+	      </div>
+	      <div class="element1">
+	        <label for="lastname1">Lastname</label>
+	        <input type="text" id="password1" name="lastname">
+	      </div>
+	       <div class="element1">
+	        <label for="username1">Username</label>
+	        <input type="text" id="username1" name="username">
+	      </div>
+	      <div class="element1">
+	        <label for="email1">Email</label>
+	        <input type="text" id="username1" name="email">
+	      </div>
+	      
+	        <div class="element1">
+	        <label for="address1">Address</label>
+	        <input type="text" id="username1" name="address">
+	      </div>
+	      
+	      <div class="element1">
+	        <label for="date1">Date Of Birth</label>
+	        <input type="datetime-local"  name="dateOfBirth">
+	      </div>
+	      
+	      
+	       <div class="element1">
+	        <label for="date1" >Registration Date</label>
+	         <input type="datetime-local" name="registrationDate" >
+	      </div>
+	   	      
+	      
+	      <div class="element2" >
+	        <label for="address1" class="gen1">Gender</label>
+	        <input class="gen2" type="radio" name="gender" value="male" checked/><span class="malfem">Male</span>&nbsp;
+			<input class="gen2" type="radio" name="gender" value="female"/><span class="malfem">Female</span>
+	      </div> 
+	      
+	      <div class="element1">
+	        <label for="address1">Phone Number</label>
+	        <input type="text" id="username1" name="phoneNumber">
+	      </div>
+	   
+	      
+	      <div class="element1">
+	        <label for="password">Password</label>
+	        <input type="password" id="password1"  name="password" >
+	      </div>
+	      
+	       <div class="element1">
+	        <label for="password">Repeted Password</label>
+	        <input type="password" id="password1" name="repetedPassword"/>
+	      </div>
+	      
+	      
+	      
+	      <div class="element1">
+	        <button type="submit">Register</button>
+	      </div>
+	    </div>
+	  </div>
+	  </form>
+
+    	<script>
+
+            function openLoginForm(){
+            document.body.classList.add("showLoginForm");
+            document.body.classList.remove("showRegisterForm");
+            }
+            function closeLoginForm(){
+            document.body.classList.remove("showLoginForm");
+            }
+
+            function closeLoginForm(){
+            document.body.classList.remove("showLoginForm");
+            }
+
+
+            function openRegisterForm(){
+            document.body.classList.add("showRegisterForm");
+            document.body.classList.remove("showLoginForm");
+            }
+
+            function closeRegisterForm(){
+            document.body.classList.remove("showRegisterForm");
+            }
+
+            function closeRegisterForm(){
+            document.body.classList.remove("showRegisterForm");
+            }
+           </script>
+      
+
+
+
+
+	<div class="yellow_bg">
+   		<div class="container">
+            <div class="row">
+               <div class="col-md-12">
                   <div class="title">
                   
-                    <h3>Knjiga</h3>
+                   
                     
                      <h2 th:text="${book.name}"></h2>
-        
                      
-     	</div>
+                     
+                   
+                     
+                  </div>
+               </div>
+            </div>
+          </div>
    		 </div>
     	
     	
+    	
+    	
+    	<!-- --- ZA ADMINA PRIKAZ / EDITOVANJE KNJIGE -->
+    	
    
+    	
+		    <div class="book">
+		        <div class="container">
+		        
+		           <div class="row">
+		           
+		           
+		            
+		             
+		             <div class="col-xl-88 col-lg-91 col-md-12 col-sm-12">
+		              <form id="formaEdit" method="post" action="books/Edit" th:if="${session.loggedInUser != null and session.loggedInUser.administrator}"> 
+		             
+		                 <div class="book_box">
 		                 
-		                <form id="formaEdit" method="post" action="books/Edit" th:if="${session.loggedInUser == null or not session.loggedInUser.administrator}">
+		              
 		                
-		                	<input type="hidden" name="id" th:value="${book.id}">
+		                	<input  type="hidden" name="id" th:value="${book.id}">
+		                
+		                
+		                     <img  class="imgBook"  th:src="${book.getImagePath}" ></img>  
 		                     
 		                     
-		                     <br><h4>Name:</h4><input type="text" th:value="${book.name}" name="name"/>
+		                     <img id="blah" src="#" alt="your image" width="100" height="100" />
 		                     
-		                     <br><h4>Author:</h4><input type="text" th:value="${book.author}" name="author"/></h4>
+		                    <input id="imgInp" type="file" name="image" accept="image/png, image/jpg"  th:value="${book.getImagePath}"   onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"/>
+		                    
+		                     
+		                     <br><h4 th:text="#{oneBook.nameOfBook}"></h4><input type="text" th:value="${book.name}" name="name"/>
+		                     
+		                     <br><h4 th:text="#{oneBook.author}"></h4><input type="text" th:value="${book.author}" name="author"/></h4>
 		                  
-		                     <br><span>Genre Komedija</span> <br>
+		                     <br><span th:text="#{oneBook.genre}"></span><br>
 		                     
-		                     <br><span>Number Of Pages:</span> <input type="number" th:value="${book.numberOfPages}" name="numberOfPages"/>
+		                     <br><span th:text="#{oneBook.numberOfPages}"></span> <input type="number" th:value="${book.numberOfPages}" name="numberOfPages"/>
 		                     
-		                     <br><span>Publishing House:</span> <input type="text" th:value="${book.publishingHouse}" name="publishingHouse"/>
+		                     <br><span th:text="#{oneBook.publishingHouse}"></span> <input type="text" th:value="${book.publishingHouse}" name="publishingHouse"/>
 		                     
-		                     <br><span>Year Of Publication:</span> <input type="text" th:value="${book.yearOfPublication}" name="yearOfPublication"/>
+		                     <br><span th:text="#{oneBook.yearOfPublication}"></span> <input type="text" th:value="${book.yearOfPublication}" name="yearOfPublication"/>
 		                     
-		                     <br><span>Type Of Cover:</span> <input type="text" th:value="${book.typeOfCover}" name="typeOfCover"/> 
+		                     <br><span th:text="#{oneBook.typeOfCover}"></span> <input type="text" th:value="${book.typeOfCover}" name="typeOfCover"/> 
 		                     
-		                     <br><span>Letter:</span> <input type="text" th:value="${book.letter}" name="letter"/> 
+		                     <br><span th:text="#{oneBook.letter}"></span> <input type="text" th:value="${book.letter}" name="letter"/> 
 		                     
-		                     <br><span>Price: <input type="number" value="0" th:value="${book.price}" name="price"/>$</span>
+		                     <br><span th:text="#{oneBook.numberOfBooks}"></span> <input  th:value="${book.numberOfBooks}" readonly/>
+		                     
+		                     <br><span th:text="#{oneBook.price}"></span><input type="number" value="0" th:value="${book.price}" name="price"/> 
 		                              
 		           		     <br><br>
 		           		     
 		           		     <div class="orderbook">
-		           		     <span>Koliko knjiga zelite poruciti?</span> <input type="number" value="0" min="0"  onkeyup="if(this.value<0){this.value= this.value * -1}" name="numberOfBooks"/> 
+		           		     <span th:text="#{oneBook.order}"></span> <input type="number" value="0" min="0"  onkeyup="if(this.value<0){this.value= this.value * -1}" name="numberOfBooks"/> 
 		                     </div>
 		                     
 		                     <br>
 		                     <div class="editBook2">
 		                     
-		                      <input class="editBook" type="submit" value="Edit Book">
+		                      <input class="editBook" type="submit"  th:value="#{oneBook.edit}">
 		                     
 		                     </div>
 		                     <br>
+		                     
+		                
+		                     
+		           
 		 					
-		 					<div>
+		 					<div class="book_box2">
 		 					
-			                    <h3>Opis:</h3>
+			                    <h3 th:text="#{oneBook.description}"></h3>
 			                    <textarea class="descriptionInput" type="text" th:field="*{book.description}" name="description">
 			 					</textarea>
 		 					
 		 					</div>
 		 					
-		 					</form>
+		 					</div>
+		 					 </form>
+		                    </div>
+		                   	        
+		                
 		 					
+		             		</div>
+		          
+				        </div> 
+				    </div>
+				</div>
+				 
+		
 
-<p>------------------------------------------------------------------------------------------------------------------------</p>		           
+		
+		
+		<!-- ---- ZA OBICNOG USERA PRIKAZ -->
+	 
+		    <div class="book">
+		        <div class="container">
+		           <div class="row">
+		           
 		           <div class="forma" th:if="${session.loggedInUser == null or not session.loggedInUser.administrator}">
 		           
 		             <div class="col-xl-88 col-lg-91 col-md-12 col-sm-12">
@@ -101,38 +460,222 @@
 		                 	
 		                 	<input type="hidden" name="id" th:value="${book.id}">
 		                 	
+		                   <img  class="imgBook"  th:src="${book.getImagePath}" ></img>  
 		                     
 		                     <h3 th:text="${book.name}"></h3><br>
 		                     
 		                     <h4 th:text="${book.author}"></h4>
 		                     
-		                     <br><span>Genre - Drama</span> <br>
+		                     <br><span th:text="#{oneBook.genre}"></span> <br>
 		                     
-		                     <br><span>Number Of Pages:</span> <span th:text="${book.numberOfPages}"></span>
+		                     <br><span th:text="#{oneBook.numberOfPages}"></span> <span th:text="${book.numberOfPages}"></span>
 		                     
-		                     <br><span>Publishing House:</span> <span th:text="${book.publishingHouse}"></span>
+		                     <br><span th:text="#{oneBook.publishingHouse}"></span> <span th:text="${book.publishingHouse}"></span>
 		                     
-		                     <br><span>Year Of Publication:</span> <span th:text="${book.yearOfPublication}"></span>
+		                     <br><span th:text="#{oneBook.yearOfPublication}"></span> <span th:text="${book.yearOfPublication}"></span>
 		                     
-		                     <br><span>Type Of Cover:</span> <span th:text="${book.typeOfCover}"></span> 
+		                     <br><span th:text="#{oneBook.typeOfCover}"></span> <span th:text="${book.typeOfCover}"></span> 
 		                     
-		                     <br><span>Letter:</span> <span th:text="${book.letter}"></span> 
+		                     <br><span th:text="#{oneBook.letter}"></span> <span th:text="${book.letter}"></span> 
 		                     
-		                     <h3>Price: <span class="cena" th:text="${book.price}"></span>$</h3>
+		                     <h3 th:text="#{oneBook.price}"></h3><span class="cena" th:text="${book.price}"></span></h3>
+		                     
+		                     
+		                     
 		                     <br>
+		                     
+		                     <!--  Dodavanje knjige u korpu u sesiji -->
+		                     
+		                     <form method="post" action="ShoppingCart/Details">
+		                     
+		                     <input th:value="${book.id}" name="id" type="hidden" />
+		                     <input th:value="${book.name}" name="name" type="hidden" />
+		                     
+			                  
+			                     <button type="submit" class="addToCart" th:text="#{oneBook.addToCart}">
+			                     </button>
+			                     
+		                     </form>
+		                     
+		                     <br>
+		                    <!--  <a th:href="|ShoppingCart/Details?id=${book.id}|" th:text="${book.name}"></a> -->
+		                     
+		                      <!--  Dodavanje knjige u listu zelja -->
+		                     
+		                      
+		                     <div  th:if="${session.loggedInUser != null}">
+		                     
+								<form method="post" action="WishList">
+									
+									
+									<input type="hidden" name="bookId" th:value="${book.id}" />
+									
+									<input type="hidden" name="username" th:value="${session.loggedInUser.username}"/>
+									
+									
+									
+									<button type="submit" class="heart">
+                                  		<img src="images/heart.png" alt="#" class="heartt">
+                             		</button>
+									
+								</form>
+								
+							</div>
+		                     
+		
 		                    </div>
 		                    
 		             </div>
 		
 		             <div class="col-xl-88 col-lg-91 col-md-12 col-sm-12">
 		                <div class="book_box">
-		                    <h3>Opis:</h3>
+		                	
+		                    <h3 th:text="#{oneBook.description}" class="descText"></h3><br>
+		            
 		                    <h4 th:text="${book.description}"></h4> 
 		                    <p></p>
 		
 		
 		                   </div>
 		            </div>
+		            
+		            
+		            <!------------ Dodavanje komentara  -------->
+		            
+		            <form method="post" action="books/AddComment">
+					
+					<div class="col-xl-12 col-lg-6 col-md-12 col-sm-12" th:if="${session.loggedInUser != null}">
+					
+		                <div class="comment_box" id="comment_box" name="comment_box" >
+		                    <h3>Add a Comment:</h3>
+		                    
+		                    <table class="addComm" id="addComm"  >
+							
+								<tr>
+									<td>
+										
+									 <input type="hidden" name="userComment" th:value="${session.loggedInUser.username}"/>
+									 <input type="hidden" name="bookComment" th:value="${book.id}" />
+									
+									 <textarea class="textComm" type="text"  name="text"></textarea>
+									 
+									  <div class="submitComm2">
+									  
+									  <input class="ratingComm" name="ratingComment" type="number" min=1 max=5 onkeyup="if(this.value<0){this.value= this.value * -1}" oninput="if(this.value>5){this.value=5}"/>
+									  
+									 </div>
+									 
+			 						 <div class="submitComm2">
+		                     
+					                     <input class="submitComm" type="submit" value="Add" >
+					                     
+					                  </div>
+			 							
+									</td>
+								</tr>
+								
+							</table>
+							
+							<caption>Leave a comment - Books & Bookshelves</caption>
+		                
+		
+		
+		                   </div>
+		            </div>
+		            
+		            </form>
+		            
+		            <p class="greska"></p>
+					
+		            
+		            
+		             <!------------ Prikaz svih komentara  -------->
+		            
+		            
+		            <div class="col-xl-12 col-lg-6 col-md-12 col-sm-12">
+		                <div class="comment_box" id="comment_box" name="comment_box" >
+		                    <h3>Comments:</h3>
+		                    
+		                    <table class="komentari1" id="komentari"  >
+							
+							<tr>
+								<td>
+									<ul>
+										<li>
+												
+												
+							
+											
+										</li>
+									</ul>
+									</td>
+								</tr>
+							</table>
+							<caption>Comments - Books & Bookshelves</caption>
+		                
+		
+		
+		                   </div>
+		            </div>
+		        </div> 
+		    </div>
+		</div>
+</div>
+
+
+    <!-- footer -->
+    <footer>
+        <div class="footer">
+            <div class="copyright">
+                <div class="container">
+                    <p>© 2020 All Rights Reserved. Design by Ivan Stankovic</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end footer -->
+   
+    <div class="overlay"></div>
+    <!-- Javascript files-->
+    
+    
+
+    <script src="js/jquery.min.js"></script>
+     <script src="js/jquery-3.0.0.min.js"></script>
+    
+    
+    <script src="js/allComments.js" type="text/javascript"></script>
+    <script src="js/addingComments.js" type="text/javascript"></script>
+    
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/custom.js"></script>
+     <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+     
+   
+
+     <script type="text/javascript">
+        $(document).ready(function() {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+            $('#dismiss, .overlay').on('click', function() {
+                $('#sidebar').removeClass('active');
+                $('.overlay').removeClass('active');
+            });
+
+            $('#sidebarCollapse').on('click', function() {
+                $(this).children().toggleClass('active');
+                $('#sidebar').toggleClass('active');
+            });
+
+            
+        });
+    </script>
+    
+   
 </body>
 
 
