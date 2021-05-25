@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <meta charset="utf-8">
+    <base th:href="@{/}">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    
+
+	
+	<title>One Comment - Admin</title>
+</head>
+<body>
+	<h2>One Comment / Admin</h2>
+	<ul>
+		<li><a href="">Welcome Page</a></li>
+	</ul>
+	
+
+
+	
+	<form method="post" action="Comments/EditCommentAdmin">
+	
+
+		
+		<table class="forma">
+		
+			<caption>Comment!</caption>
+			
+			<tr><th>ID:</th><td><input type="text" name="id"/></td></tr>
+			
+			<tr><th>Text:</th><td><input type="text"  name="text" readonly/></td></tr>
+			
+			<tr><th>Rating:</th><td><input type="text" min="1" max="5"  name="ratingComment" readonly/></td></tr>
+			
+			<tr><th>Date:</th><td><input type="text"  name="dateComment" readonly/></td></tr>
+			
+			<tr><th>Book:</th><td><input type="text"  name="bookComment" readonly/></td></tr>
+			<tr><th>User:</th><td><input type="text"  name="userComment" readonly/></td></tr>
+			
+			<tr><th>Status:</th><td><input type="text"  name="statusComment"/></td></tr>
+			
+			
+			
+		
+			
+			<tr><th></th><td><input type="submit" value="Edit Comment"/></td></tr>
+		</table>
+	</form>
+	
+	<!-- <table class="forma">
+		
+			<caption>Comment!</caption>
+			
+			<tr><th>Text:</th><td><input type="text"  name="text"/></td></tr>
+			
+			<tr><th>Rating:</th><td><input type="number" min="1" max="5"  name="ratingComment"/></td></tr>
+			
+			<tr><th>Date:</th><td><input type="date"  name="dateComment"/></td></tr>
+			
+			<tr><th>Book:</th><td><input type="hidden"  name="bookComment"/></td></tr>
+			<tr><th>User:</th><td><input type="hidden"  name="userComment"/></td></tr>
+			
+			<tr><th>Status:</th><td><input type="text"  name="statusComment"/></td></tr>
+			
+			
+			
+		
+			
+			<tr><th></th><td><input type="submit" value="Edit Comment"/></td></tr>
+		</table> -->
+	
+
+	<p class="greska"></p>
+	
+	<script src="js/jquery.min.js"></script>
+     <script src="js/jquery-3.0.0.min.js"></script>
+	
+	<script src="js/oneCommentAdmin.js" type="text/javascript"></script>
+</body>
+</html>

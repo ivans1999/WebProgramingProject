@@ -1,0 +1,6 @@
+li.komLI {
+    border: 3px solid #928b8b;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
