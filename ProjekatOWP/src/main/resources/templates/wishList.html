@@ -13,7 +13,7 @@
 
 
 	<div class="tabela" th:if="${session.loggedInUser != null }">
-			<span>All Books In Wish List</span>
+			<span>My Wish list</span>
 			
 
 			<ul>
@@ -35,12 +35,7 @@
 			</form>
 				<input class="broj" th:value="${itCart.book.id}" name="id" type="hidden"/>
 				&nbsp;&nbsp;
-			
-				
-				<!-- <td><a th:href="|Projekcije/Details?id=${itKarta.projekcija.id}|" th:text="${#temporals.format(itKarta.projekcija.datumIVreme, 'dd.MM.yyy . HH:mm')}"></a></td>
-				
-				<td><a th:href="|Filmovi/Details?id=${itKarta.projekcija.film.id}|" th:text="${itKarta.projekcija.film.naziv}"></a></td>
-				 -->
+		
 			
 				
 				<span class="broj" th:text="${itCart.book.name}"><a href="|books/Details?id=${itBook.id}|"  th:text="${itBook.name}" ></a></span>
@@ -58,43 +53,7 @@
 			
 		</div>
 		
-	
-		
-		
-		
-		<!-- <form method="post" action="ShoppingCart/Remove" >
-		
-		<div   th:unless="${session.choosenBooksForUser.empty}" id="dataTable" >
-	
-    	
-				<ul>
-					
-			
-					<li name="line_items" th:each="itBook: ${session.choosenBooksForUser}">
-					
-					<span> Do you want do remove this book?</span>&nbsp;&nbsp;&nbsp;&nbsp;
-					
-					<span>Name of book:<a th:href="|books/Details?id=${itBook.id}|" th:text="${itBook.name}" name="name"></a></span>
-				
-					<span><input type="hidden" th:value="${itBook.id}" name="id"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-					
-					<button type="submit">Remove Book from Cart</button>
-					<br>
-					<br>
-					</li>
-				
-					
-				 </ul>
-		
-				<td><input type="text" name="total" value="" jAutoCalc="SUM({item_total})"></td>
-			
-			<b name="totalPrice" class="totalPrice"  id="totalPrice" th:text="${#aggregates.sum(session.choosenBooksForUser.![price])}"></b>
-			
-				
-		</div>
-		
-		
-		</form> -->
+		<a href="books">All books</a>
 
 </body>
 </html>
