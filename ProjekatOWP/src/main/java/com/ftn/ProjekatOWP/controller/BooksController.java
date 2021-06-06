@@ -152,15 +152,6 @@ public class BooksController implements ServletContextAware {
 			return null;
 		}
 
-		
-//		// čitanje
-//		List<Genre> genres = genreService.findAll();
-
-		
-		// prosleđivanje
-		
-//		ModelAndView rezultat = new ModelAndView("addBook");
-//		rezultat.addObject("zanrovi", zanrovi);
 
 		return "addBook";
 	}

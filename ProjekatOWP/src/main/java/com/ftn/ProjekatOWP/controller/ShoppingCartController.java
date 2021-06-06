@@ -36,6 +36,15 @@ public class ShoppingCartController {
 	@Autowired
 	private BookService bookService;
 	
+	@Autowired
+	private ServletContext servletContext;
+	private String baseURL; 
+
+	@PostConstruct
+	public void init() {	
+		baseURL = servletContext.getContextPath() + "/";			
+	}
+	
 	
 
 	@GetMapping
@@ -78,6 +87,7 @@ public class ShoppingCartController {
 		return rezultat;
 	}
 	
+	
 	@PostMapping(value="/Buy")
 	@SuppressWarnings("unchecked")
 	public ModelAndView buy(
@@ -91,19 +101,26 @@ public class ShoppingCartController {
 		
 		ModelAndView rezultat = new ModelAndView("shoppingCart");
 
-		
-		
 		return rezultat;
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
+	@GetMapping(value="/Buy")
+	@SuppressWarnings("unchecked")
+	public String getBuy() throws IOException{
+//		
+//		Book book = bookService.findOne(id);
+//		
+//		List<Book> bookSelected = (List<Book>) session.getAttribute(ShoppingCartController.CHOOSEN_BOOKS_FOR_USER_KEY);
+//		if(bookSelected.contains(book)) {
+//	        bookSelected.remove(book);     
+//	      }
+//		
+//		
+//		ModelAndView rezultat = new ModelAndView("shoppingCart");
+		return "bought.html";
+//		return rezultat;
+	}
 	
 	@PostMapping(value="/Remove")
 	@SuppressWarnings("unchecked")

@@ -112,14 +112,6 @@ public class CommentsController implements ServletContextAware{
 			
 			HttpSession session, HttpServletRequest request) throws IOException {
 		
-
-//		Korisnik prijavljeniKorisnik = (Korisnik) session.getAttribute(KorisnikController.KORISNIK_KEY);
-//		if (prijavljeniKorisnik == null || !prijavljeniKorisnik.isAdministrator()) {
-//			Map<String, Object> odgovor = new LinkedHashMap<>();
-//			odgovor.put("status", "odbijen");
-//			return odgovor;
-//		}
-		
 		
 		try {
 		

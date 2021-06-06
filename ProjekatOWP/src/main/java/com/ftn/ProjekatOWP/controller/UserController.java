@@ -37,12 +37,7 @@ import com.ftn.ProjekatOWP.service.UserService;
 public class UserController {
 	
 	public static final String USER_KEY = "loggedInUser";
-	
-//	public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd. HH:mm");
-//	public static final String minDate = LocalDate.MIN.format(DateTimeFormatter.ofPattern("dd.MM.yyyy."));
-//	public static final String maxDate = LocalDate.MAX.format(DateTimeFormatter.ofPattern("dd.MM.yyyy."));
-//	public static final String minTime = LocalTime.MIN.format(DateTimeFormatter.ofPattern("HH:mm"));
-//	public static final String maxTime = LocalTime.MAX.format(DateTimeFormatter.ofPattern("HH:mm"));
+
 	
 	
 	@Autowired
