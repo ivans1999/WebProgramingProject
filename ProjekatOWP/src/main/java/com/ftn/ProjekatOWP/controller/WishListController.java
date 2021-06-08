@@ -141,10 +141,6 @@ public class WishListController {
 		
 		
 		
-		
-		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxx");	
-		
-		
 		ShoppingCart shoppingCart = new ShoppingCart(book, user);
 		shoppingCartService.save(shoppingCart);
 		
@@ -162,10 +158,6 @@ public class WishListController {
 		return rezultat;
 	}
 	
-	
-	
-	// smisliti za domaci kako da kupi n karata gde se taj broj prosledi od strane korisnika
-	// i voditi racuna koliko koja projekcija ima karata
 			
 	
 	@PostMapping(value="/Remove")

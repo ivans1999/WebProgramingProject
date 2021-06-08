@@ -93,12 +93,10 @@ public class ShoppingCartController {
 	public ModelAndView buy(
 			HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
-		
 	
 		List<Book> bookSelected = (List<Book>) session.getAttribute(ShoppingCartController.CHOOSEN_BOOKS_FOR_USER_KEY);
 		 session.setAttribute(ShoppingCartController.CHOOSEN_BOOKS_FOR_USER_KEY, bookSelected);
 	
-		
 		ModelAndView rezultat = new ModelAndView("shoppingCart");
 
 		return rezultat;
